@@ -1,3 +1,5 @@
+package Assignment_2;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,10 +12,11 @@ public class Nephew extends Child {
     private List<Persons> nephews = new ArrayList<>();
 
     public Nephew(Connection connection, Persons person) {
+        this.person = person;
         try {
-            ResultSet results = FamilyRelations.getNephews(connection, person);
+            ResultSet results = SQLFamilyRelations.getNephews(connection, person);
             while (results.next()) {
-                nephews.add(new Persons(results.getInt("id"), type, results.getString("Name"), results.getString("Gender")));
+                nephews.add(new Persons(results.getInt("id"), type, results.getString("Name"), results.getString("Sex")));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -27,7 +30,7 @@ public class Nephew extends Child {
     public String toString() {
         String output = String.format("The Nephews of %s:\n", this.person.getName());
         for (Persons P : getNephews())
-            output += P.getName() + "\n";
+            output += P.toString() + "\n";
         return output;
     }
 

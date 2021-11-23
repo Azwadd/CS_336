@@ -36,10 +36,13 @@ SELECT Name AS 'Given Person',
 From Persons WHERE Id = @personID;
 
 -- Query: Selecting Male Nephews of a given person
-SET @personID := 4;
+SET @personID := 10;
 SELECT Id, Name AS 'Nephews of a Given Person', SEX AS 'Gender' FROM Persons WHERE Id IN
     (SELECT pId FROM Family WHERE fId IN
         (SELECT pId FROM Family WHERE mId = (SELECT mId FROM Family WHERE pId = @personID)
                                   AND fId = (SELECT fId FROM Family WHERE pId = @personID) AND SEX = 'M' AND NOT pId = @personID)
         OR mId IN (SELECT pId FROM Family WHERE mId = (SELECT mId FROM Family WHERE pId = @personID)
+
                                             AND fId = (SELECT fId FROM Family WHERE pId = @personID) AND SEX = 'M' AND NOT pId = @personID));
+
+SELECT * FROM Persons WHERE id IN (SELECT pid FROM FAMILY WHERE fid = 13  OR mid = 13);

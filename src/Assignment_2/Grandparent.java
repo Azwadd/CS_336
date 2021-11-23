@@ -1,3 +1,5 @@
+package Assignment_2;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,9 +14,12 @@ public class Grandparent extends Persons {
     public Grandparent(Connection connection, Persons person) {
         this.person = person;
         try {
-            ResultSet results = FamilyRelations.getGrandparents(connection, person);
+            ResultSet results = SQLFamilyRelations.getGrandparents(connection, person);
             while (results.next()) {
-                grandparents.add(new Persons(results.getInt("id"), type, results.getString("Name"), results.getString("Sex")));
+                grandparents.add(getRecord(connection, results.getInt("Paternal Grandfather")));
+                grandparents.add(getRecord(connection, results.getInt("Paternal Grandmother")));
+                grandparents.add(getRecord(connection, results.getInt("Maternal Grandfather")));
+                grandparents.add(getRecord(connection, results.getInt("Maternal Grandmother")));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -28,7 +33,7 @@ public class Grandparent extends Persons {
     public String toString() {
         String output = String.format("The grandparents of %s:\n", this.person.getName());
         for (Persons P : getGrandparents())
-            output += P.getName() + "\n";
+            output += P.toString() + "\n";
         return output;
     }
 

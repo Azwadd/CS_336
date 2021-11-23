@@ -1,3 +1,5 @@
+package Assignment_2;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,9 +14,9 @@ public class BrotherInLaw extends Persons {
     public BrotherInLaw(Connection connection, Persons person) {
         this.person = person;
         try {
-            ResultSet results = FamilyRelations.getBrotherInLaw(connection, person);
+            ResultSet results = SQLFamilyRelations.getBrotherInLaw(connection, person);
             while (results.next()) {
-                BrotherInLaws.add(new Persons(results.getInt("id"), type, results.getString("Name"), results.getString("Sex")));
+                BrotherInLaws.add(getRecord(connection, results.getInt("bid")));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -27,7 +29,7 @@ public class BrotherInLaw extends Persons {
     public String toString() {
         String output = String.format("The brother in law of %s:\n", this.person.getName());
         for (Persons P : getBrotherInLaw())
-            output += P.getName() + "\n";
+            output += P.toString() + "\n";
         return output;
     }
 
