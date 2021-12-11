@@ -59,23 +59,23 @@ SELECT StartStationID, MIN(TripDuration), MAX(TripDuration), AVG(TripDuration), 
 FROM dbo.CitiBike GROUP BY StartStationID ORDER BY StartStationID
 SELECT * FROM dbo.Trips
 
-DROP TABLE IF EXISTS UsageByDay;
+DROP TABLE IF EXISTS dbo.UsageByDay;
 GO
-CREATE TABLE UsageByDay(
+CREATE TABLE dbo.UsageByDay(
     StationID INT PRIMARY KEY,
     NumberUsersWeekday INT,
     NumberUsersWeekend INT
 );
-INSERT INTO UsageByDay
+INSERT INTO dbo.UsageByDay
 SELECT A.StartStationID, A.WeekdayUsers, B.WeekendUsers FROM
-    (SELECT StartStationID, COUNT(*) AS 'WeekdayUsers' FROM CitiBike
+    (SELECT StartStationID, COUNT(*) AS 'WeekdayUsers' FROM dbo.CitiBike
         WHERE StartDay IN ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday') GROUP BY StartStationID) A
     JOIN
-    (SELECT StartStationID, COUNT(*) AS 'WeekendUsers' FROM CitiBike WHERE
+    (SELECT StartStationID, COUNT(*) AS 'WeekendUsers' FROM dbo.CitiBike WHERE
             StartDay IN ('Saturday', 'Sunday')
      GROUP BY StartStationID) B
     ON A.StartStationID = B.StartStationID
-SELECT * FROM UsageByDay;
+SELECT * FROM dbo.UsageByDay;
 
 
 DROP TABLE IF EXISTS UsageByGender;
