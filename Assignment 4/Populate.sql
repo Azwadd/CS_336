@@ -59,6 +59,7 @@ SELECT StartStationID, MIN(TripDuration), MAX(TripDuration), AVG(TripDuration), 
 FROM dbo.CitiBike GROUP BY StartStationID ORDER BY StartStationID
 SELECT * FROM dbo.Trips
 
+-- Populate UsageByDay Table
 DROP TABLE IF EXISTS dbo.UsageByDay;
 GO
 CREATE TABLE dbo.UsageByDay(
