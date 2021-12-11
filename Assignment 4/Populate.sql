@@ -78,22 +78,22 @@ SELECT A.StartStationID, A.WeekdayUsers, B.WeekendUsers FROM
     ON A.StartStationID = B.StartStationID
 SELECT * FROM dbo.UsageByDay;
 
-
-DROP TABLE IF EXISTS UsageByGender;
+-- Populate UsageByGender Table
+DROP TABLE IF EXISTS dbo.UsageByGender;
 GO
-CREATE TABLE UsageByGender(
+CREATE TABLE dbo.UsageByGender(
     StationID INT PRIMARY KEY,
     NumberMaleUsers INT,
     NumberFemaleUsers INT
 );
-INSERT INTO UsageByGender
+INSERT INTO dbo.UsageByGender
 SELECT A.StartStationID, A.MaleUsers, B.FemaleUsers FROM
-    (SELECT StartStationID, COUNT(*) AS 'MaleUsers' FROM CitiBike
+    (SELECT StartStationID, COUNT(*) AS 'MaleUsers' FROM dbo.CitiBike
      WHERE Gender = 1 GROUP BY StartStationID) A
         JOIN
-    (SELECT StartStationID, COUNT(*) AS 'FemaleUsers' FROM CitiBike
+    (SELECT StartStationID, COUNT(*) AS 'FemaleUsers' FROM dbo.CitiBike
         WHERE Gender = 2 GROUP BY StartStationID) B ON A.StartStationID = B.StartStationID
-SELECT * FROM UsageByGender;
+SELECT * FROM dbo.UsageByGender;
 
 DROP TABLE IF EXISTS UsageByAge;
 GO
