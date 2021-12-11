@@ -95,26 +95,29 @@ SELECT A.StartStationID, A.MaleUsers, B.FemaleUsers FROM
         WHERE Gender = 2 GROUP BY StartStationID) B ON A.StartStationID = B.StartStationID
 SELECT * FROM dbo.UsageByGender;
 
-DROP TABLE IF EXISTS UsageByAge;
+-- Populate UsageByAge Table
+DROP TABLE IF EXISTS dbo.UsageByAge;
 GO
-CREATE TABLE UsageByAge(
+CREATE TABLE dbo.UsageByAge(
     StationID INT PRIMARY KEY,
     NumberUsersUnder18 INT,
     NumberUsers18To40 INT,
     NumberUsersOver40 INT
 );
 DECLARE @CURRENT_YEAR INT = 2013;
-INSERT INTO UsageByAge
-SELECT R.StartStationID, R.NumberUsersUnder18, R.NumberUsers18To40, C.NumberUsersOver40 FROM
+INSERT INTO dbo.UsageByAge
+SELECT Z.StartStationID, Z.NumberUsersUnder18, Z.NumberUsers18To40, C.NumberUsersOver40 FROM
     (SELECT A.StartStationID, NumberUsersUnder18, NumberUsers18To40 FROM
-        (SELECT StartStationID, COUNT(*) AS 'NumberUsersUnder18' FROM CitiBike
-            WHERE Birth <> '\N' AND (@CURRENT_YEAR - CAST(Birth AS INT) < 18) GROUP BY StartStationID) A
+        (SELECT StartStationID, COUNT(*) AS 'NumberUsersUnder18' FROM dbo.CitiBike
+            WHERE Birth <> '\N' AND (@CURRENT_YEAR - CAST(Birth AS INT) < 18)
+        GROUP BY StartStationID) A
         JOIN
         (SELECT StartStationID, COUNT(*) AS 'NumberUsers18To40' FROM CitiBike
-            WHERE Birth <> '\N' AND (@CURRENT_YEAR - CAST(Birth AS INT) >= 18) AND (@CURRENT_YEAR - CAST(Birth AS INT) <= 40)
-            GROUP BY StartStationID) B ON A.StartStationID = B.StartStationID) R
+            WHERE Birth <> '\N' AND (@CURRENT_YEAR - CAST(Birth AS INT) >= 18)
+              AND (@CURRENT_YEAR - CAST(Birth AS INT) <= 40)
+            GROUP BY StartStationID) B ON A.StartStationID = B.StartStationID) Z
         JOIN
         (SELECT StartStationID, COUNT(*) AS 'NumberUsersOver40' FROM CitiBike
             WHERE Birth <> '\N' AND (@CURRENT_YEAR - CAST(Birth AS INT) > 40)
-                GROUP BY StartStationID) C ON R.StartStationID = C.StartStationID
-SELECT * FROM UsageByAge;
+                GROUP BY StartStationID) C ON Z.StartStationID = C.StartStationID
+SELECT * FROM dbo.UsageByAge;
