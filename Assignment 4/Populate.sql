@@ -44,19 +44,19 @@ INTERSECT
 SELECT DISTINCT EndStationID, EndStationName, EndStationLatitude, EndStationLongitude FROM dbo.CitiBike
 SELECT * FROM dbo.Stations;
 
-DROP TABLE IF EXISTS Trips;
+DROP TABLE IF EXISTS dbo.Trips;
 GO
-CREATE TABLE Trips(
+CREATE TABLE dbo.Trips(
     StationID INT PRIMARY KEY,
     MinTripDuration VARCHAR(30),
     MaxTripDuration VARCHAR(30),
     AvgTripDuration VARCHAR(30),
     NumUsers INT
 );
-INSERT INTO Trips
-SELECT StartStationID, MIN(TripDuration), MAX(TripDuration), AVG(TripDuration), COUNT(StartStationID) FROM CitiBike
-GROUP BY StartStationID ORDER BY StartStationID
-SELECT * FROM Trips
+INSERT INTO dbo.Trips
+SELECT StartStationID, MIN(TripDuration), MAX(TripDuration), AVG(TripDuration), COUNT(StartStationID)
+FROM dbo.CitiBike GROUP BY StartStationID ORDER BY StartStationID
+SELECT * FROM dbo.Trips
 
 DROP TABLE IF EXISTS UsageByDay;
 GO
