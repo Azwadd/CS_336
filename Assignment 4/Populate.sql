@@ -30,19 +30,19 @@ GO
 SELECT * FROM CitiBike;
 
 -- Populate Stations Table
-DROP TABLE IF EXISTS Stations;
+DROP TABLE IF EXISTS dbo.Stations;
 GO
-CREATE TABLE Stations(
+CREATE TABLE dbo.Stations(
     ID INT PRIMARY KEY,
     Name VARCHAR(64),
     Latitude FLOAT,
     Longitude FLOAT
 );
-INSERT INTO Stations
-SELECT DISTINCT StartStationID, StartStationName, StartStationLatitude, StartStationLongitude FROM CitiBike
+INSERT INTO dbo.Stations
+SELECT DISTINCT StartStationID, StartStationName, StartStationLatitude, StartStationLongitude FROM dbo.CitiBike
 INTERSECT
-SELECT DISTINCT EndStationID, EndStationName, EndStationLatitude, EndStationLongitude FROM CitiBike
-SELECT * FROM Stations;
+SELECT DISTINCT EndStationID, EndStationName, EndStationLatitude, EndStationLongitude FROM dbo.CitiBike
+SELECT * FROM dbo.Stations;
 
 DROP TABLE IF EXISTS Trips;
 GO
