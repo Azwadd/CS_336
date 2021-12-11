@@ -44,6 +44,7 @@ INTERSECT
 SELECT DISTINCT EndStationID, EndStationName, EndStationLatitude, EndStationLongitude FROM dbo.CitiBike
 SELECT * FROM dbo.Stations;
 
+-- Populate Trips Table
 DROP TABLE IF EXISTS dbo.Trips;
 GO
 CREATE TABLE dbo.Trips(
