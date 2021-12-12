@@ -7,9 +7,10 @@ SELECT TOP(10) StartStationID, EndStationID, NumberOfTrips FROM
     as TripCount ORDER BY NumberOfTrips desc;
 
 -- Usage Pattern By Gender And Age
-SELECT StationID, NumberOfMales, NumberOfFemales, Under18, Between18And40, Over40 FROM
-    (SELECT A.StationID, A.NumberMaleUsers as 'NumberOfMales', A.NumberFemaleUsers as 'NumberOfFemales',
-            B.NumberUsersUnder18 as 'Under18', B.NumberUsers18To40 as 'Between18And40', B.NumberUsersOver40 as 'Over40' 
+SELECT StationID, NumberOfMales, NumberOfFemales, Under18, Between18And40, Over40 
+    FROM (SELECT A.StationID, A.NumberMaleUsers as 'NumberOfMales', 
+    A.NumberFemaleUsers as 'NumberOfFemales', B.NumberUsersUnder18 as 'Under18', 
+    B.NumberUsers18To40 as 'Between18And40', B.NumberUsersOver40 as 'Over40' 
             FROM dbo.UsageByGender A, dbo.UsageByAge B
         WHERE A.StationID = B.StationID) as Pattern
 
