@@ -73,9 +73,10 @@ CREATE TABLE dbo.UsageByDay(
     NumberUsersWeekend INT
 );
 INSERT INTO dbo.UsageByDay
-SELECT A.StartStationID, A.WeekdayUsers, B.WeekendUsers FROM
-    (SELECT StartStationID, COUNT(*) AS 'WeekdayUsers' FROM dbo.CitiBike
-        WHERE StartDay IN ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday') GROUP BY StartStationID) A
+SELECT A.StartStationID, A.WeekdayUsers, B.WeekendUsers 
+    FROM (SELECT StartStationID, COUNT(*) AS 'WeekdayUsers' FROM dbo.CitiBike
+        WHERE StartDay IN ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday') 
+        GROUP BY StartStationID) A
     JOIN
     (SELECT StartStationID, COUNT(*) AS 'WeekendUsers' FROM dbo.CitiBike WHERE
             StartDay IN ('Saturday', 'Sunday')
