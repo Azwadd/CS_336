@@ -59,7 +59,8 @@ CREATE TABLE dbo.Trips(
     NumUsers INT
 );
 INSERT INTO dbo.Trips
-SELECT StartStationID, MIN(TripDuration), MAX(TripDuration), AVG(TripDuration), COUNT(StartStationID)
+SELECT StartStationID, MIN(TripDuration), 
+MAX(TripDuration), AVG(TripDuration), COUNT(StartStationID)
 FROM dbo.CitiBike GROUP BY StartStationID ORDER BY StartStationID
 SELECT * FROM dbo.Trips
 
