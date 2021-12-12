@@ -16,6 +16,7 @@ SELECT StationID, NumberOfMales, NumberOfFemales, Under18, Between18And40, Over4
 
 -- Identify Any Dormant or Vacant Bike Stations
 SELECT Vacant, Dormant FROM
-    (SELECT DISTINCT A.StartStationID as 'Vacant', B.EndStationID 'Dormant' From dbo.CitiBike A, dbo.CitiBike B
-        WHERE A.StartStationId NOT IN (SELECT EndStationID FROM dbo.CitiBike) 
-        AND B.EndStationID NOT IN (SELECT StartStationID FROM dbo.CitiBike)) as VacantAndDormant
+    (SELECT DISTINCT A.StartStationID as 'Vacant', B.EndStationID 'Dormant' 
+    From dbo.CitiBike A, dbo.CitiBike B WHERE A.StartStationId NOT IN 
+        (SELECT EndStationID FROM dbo.CitiBike) AND B.EndStationID NOT IN 
+            (SELECT StartStationID FROM dbo.CitiBike)) as VacantAndDormant
