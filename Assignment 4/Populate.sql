@@ -39,9 +39,13 @@ CREATE TABLE dbo.Stations(
     Longitude FLOAT
 );
 INSERT INTO dbo.Stations
-SELECT DISTINCT StartStationID, StartStationName, StartStationLatitude, StartStationLongitude FROM dbo.CitiBike
+SELECT DISTINCT StartStationID, StartStationName, 
+StartStationLatitude, StartStationLongitude
+FROM dbo.CitiBike
 INTERSECT
-SELECT DISTINCT EndStationID, EndStationName, EndStationLatitude, EndStationLongitude FROM dbo.CitiBike
+SELECT DISTINCT EndStationID, EndStationName, 
+EndStationLatitude, EndStationLongitude 
+FROM dbo.CitiBike
 SELECT * FROM dbo.Stations;
 
 -- Populate Trips Table
