@@ -45,6 +45,7 @@ def updateZipcodes(connection, latitude, longitude, zipcode):
         cursor.execute("ALTER TABLE Stations ADD ZIPCODE INTEGER").commit()
     except Exception as e:
         print("Error: ", e)
+        # If comlumn exists pass 
         pass
     finally:
         cursor.close()
