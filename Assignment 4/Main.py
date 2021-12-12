@@ -11,7 +11,8 @@ def getServer():
 
 
 def getZipCode(latitude, longitude):
-    ls = LS(platform_credentials=PlatformCredentials.from_credentials_file("credentials.properties"))
+    platform_credentials=PlatformCredentials.from_credentials_file("credentials.properties")
+    ls = LS(platform_credentials)
     geo = ls.reverse_geocode(latitude, longitude)
     return geo.as_json_string().split('"postalCode": "')[1][0:5]
 
