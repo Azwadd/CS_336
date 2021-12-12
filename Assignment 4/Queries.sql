@@ -1,8 +1,10 @@
 -- Top 10 Most Frequent Trips Between Any Station
 DECLARE @Day VARCHAR(9) = 'Monday';
 SELECT TOP(10) StartStationID, EndStationID, NumberOfTrips FROM
-    (SELECT StartStationID, EndStationID, COUNT(*) As 'NumberOfTrips' FROM dbo.CitiBike
-        WHERE StartDay = @Day GROUP BY StartStationId, EndStationID) as TripCount ORDER BY NumberOfTrips desc;
+    (SELECT StartStationID, EndStationID, COUNT(*) As 'NumberOfTrips' 
+    FROM dbo.CitiBike WHERE StartDay = @Day 
+    GROUP BY StartStationId, EndStationID) 
+    as TripCount ORDER BY NumberOfTrips desc;
 
 -- Usage Pattern By Gender And Age
 SELECT StationID, NumberOfMales, NumberOfFemales, Under18, Between18And40, Over40 FROM
